@@ -1,0 +1,1288 @@
+-- Q1) Create the tables DEPT and EMP
+CREATE TABLE DEPT (
+    DEPTNO NUMBER,
+    DNAME VARCHAR2(50),
+    LOC VARCHAR2(50)
+);
+
+CREATE TABLE EMP (
+    EMPNO NUMBER,
+    ENAME VARCHAR2(50),
+    JOB CHAR(20),
+    MGR NUMBER,
+    HIREDATE DATE,
+    SAL NUMBER,
+    COMM NUMBER,
+    DEPTNO NUMBER
+);
+
+-- Q2) Confirm table creation
+DESC DEPT;
+DESC EMP;
+
+-- Q3) List name of the tables created by the user
+SELECT * FROM table;
+
+-- Q4) Describe tables owned by the user
+SELECT * FROM user_tables;
+
+-- Q5) View distinct object types owned by the user
+SELECT DISTINCT object_type FROM table;
+
+-- Q6) View tables, views, synonyms, and sequences owned by the user
+SELECT * FROM user_catalog;
+
+-- Q7) Add new columns COMNT and MISCEL in DEPT table of character type
+ALTER TABLE DEPT ADD (COMNT VARCHAR2(100), MISCEL VARCHAR2(100));
+
+-- Q8) Modify the size of column LOC by 15 in the DEPT table
+ALTER TABLE DEPT MODIFY LOC VARCHAR2(15);
+
+-- Q9) Set MISCEL column in the DEPT table as unused
+ALTER TABLE DEPT SET UNUSED COLUMN MISCEL;
+
+-- Q10) Drop the column COMNT from the table DEPT
+ALTER TABLE DEPT DROP COLUMN COMNT;
+
+-- Q11) Drop unused columns in DEPT table
+ALTER TABLE DEPT DROP UNUSED COLUMNS;
+
+-- Q12) Rename the table DEPT to DEPT12
+ALTER TABLE DEPT RENAME TO DEPT12;
+
+-- Q13) Remove all the rows in the table DEPT12
+DELETE FROM DEPT12;
+
+-- Q14) Add some comment to the table DEPT12 and also confirm the inclusion of comment
+COMMENT ON TABLE DEPT12 IS 'This table stores department information';
+SELECT * FROM USER_TAB_COMMENTS WHERE TABLE_NAME = 'DEPT12';
+
+-- Q15) Delete the table DEPT12 from the database
+DROP TABLE DEPT12;
+
+-- Q16) Confirm the removal of table DEPT12 from the database
+SELECT * FROM tab;
+
+-- Q17) Insert the rows of DEPT table
+INSERT INTO DEPT VALUES (10, 'ACCOUNTING', 'NEW YORK');
+INSERT INTO DEPT VALUES (20, 'RESEARCH', 'DALLAS');
+INSERT INTO DEPT VALUES (30, 'SALES', 'CHICAGO');
+INSERT INTO DEPT VALUES (40, 'OPERATIONS', 'BOSTON');
+
+-- Q18) Insert first & second rows of EMP table
+INSERT INTO EMP (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO) VALUES (7369, 'SMITH', 'CLERK', 7902, TO_DATE('17-12-1980', 'DD-MM-YYYY'), 800, NULL, 20);
+INSERT INTO EMP (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO) VALUES (7499, 'ALLEN', 'SALESMAN', 7698, TO_DATE('20-02-1981', 'DD-MM-YYYY'), 1600, 300, 30);
+
+-- Q19) Insert the remaining rows of EMP table
+INSERT INTO EMP (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO) VALUES (&empno, '&ename', '&job', &mgr, TO_DATE('&hiredate', 'DD-MM-YYYY'), &sal, &comm, &deptno);
+
+-- Q20) Create a table MANAGER
+CREATE TABLE MANAGER (
+    MGR_ID NUMBER,
+    NAME VARCHAR2(50),
+    SAL NUMBER,
+    HIREDATE DATE
+);
+
+-- Q21) Insert values into the table MANAGER
+INSERT INTO MANAGER SELECT EMPNO, ENAME, SAL, HIREDATE FROM EMP WHERE JOB = 'MANAGER';
+
+-- Q22) Change the LOC of all rows of DEPT table by 'NEW YORK'
+UPDATE DEPT SET LOC = 'NEW YORK';
+
+-- Q23) Change the LOC='DALLAS' for deptno=20 in DEPT table
+UPDATE DEPT SET LOC = 'DALLAS' WHERE DEPTNO = 20;
+
+-- Q24) Delete the rows from EMP table whose employee name = 'PAUL'
+DELETE FROM EMP WHERE ENAME = 'PAUL';
+
+-- Q25) List all the columns and rows of the table DEPT
+SELECT * FROM DEPT;
+
+-- Q26) List the name of the employee and salary of EMP table
+SELECT ENAME, SAL FROM EMP;
+
+-- Q27) Without duplication, list all names of the department of DEPT table
+SELECT DISTINCT DNAME FROM DEPT;
+
+-- Q28) Find out the name of an employee whose EMPNO is 7788
+SELECT ENAME FROM EMP WHERE EMPNO = 7788;
+
+-- Q29) As a copy of DEPT table, create DEPT1 table using select command
+CREATE TABLE DEPT1 AS SELECT * FROM DEPT;
+
+-- Q30) List ename and sal of EMP table with the column headings NAME and SALARY
+SELECT ENAME AS NAME, SAL AS SALARY FROM EMP;
+
+-- Q31) Change LOC='CHICAGO' for deptno=30 in DEPT table and COMMIT the transaction
+UPDATE DEPT SET LOC = 'CHICAGO' WHERE DEPTNO = 30;
+COMMIT;
+
+-- Q32) Delete all the rows from EMP table and ROLLBACK the transaction
+DELETE FROM EMP;
+ROLLBACK;
+
+-- Q33) Do the following operations one after another
+-- a) Change LOC='BOSTON' for deptno=40 in DEPT table
+UPDATE DEPT SET LOC = 'BOSTON' WHERE DEPTNO = 40;
+-- b) Create SAVEPOINT in the name 'update_over'
+SAVEPOINT update_over;
+-- c) Insert another row in DEPT table with your own values
+INSERT INTO DEPT VALUES (50, 'HR', 'MUMBAI');
+-- d) Rollback the transaction up to the point 'update_over'
+ROLLBACK TO update_over;
+
+-- Q34) Create table EMP1 with columns similar to EMP table
+CREATE TABLE EMP1 AS SELECT * FROM EMP WHERE 1=2;
+
+-- Add constraints to EMP1 table
+ALTER TABLE EMP1
+MODIFY DEPTNO  NUMBER(7,2) NOT NULL;
+
+ALTER TABLE EMP1
+ADD CONSTRAINT EMP1_PK PRIMARY KEY (EMPNO);
+
+-- Q35) Add NOT NULL constraint to the columns ENAME and JOB of EMP table
+ALTER TABLE EMP MODIFY (ENAME VARCHAR2(20) NOT NULL, JOB CHAR(20) NOT NULL);
+
+-- Q36) Add Primary key constraint to the column EMPNO of EMP table
+ALTER TABLE EMP ADD CONSTRAINT EMP_PK PRIMARY KEY (EMPNO);
+
+-- Q37) Add Primary key constraint to the column DEPTNO of DEPT table
+ALTER TABLE DEPT ADD CONSTRAINT DEPT_PK PRIMARY KEY (DEPTNO);
+
+-- Q38) Add Unique key constraint to the column DNAME of DEPT table
+ALTER TABLE DEPT ADD CONSTRAINT DNAME_UK UNIQUE (DNAME);
+
+-- Q39) Add Check constraint to the
+ALTER TABLE EMP ADD CONSTRAINT EMPNO_CHK CHECK (EMPNO BETWEEN 7000 AND 8000);
+
+-- Q40) Add Foreign key constraint to the column DEPTNO of EMP table references DEPTNO of DEPT table
+ALTER TABLE EMP ADD CONSTRAINT EMP_DEPT_FK FOREIGN KEY (DEPTNO) REFERENCES DEPT (DEPTNO);
+
+-- Q41) Add a Foreign key constraint to the EMP1 table indicating that a manager must already exist as a valid employee in the EMP1 table
+ALTER TABLE EMP1 ADD CONSTRAINT EMP1_MANAGER_FK FOREIGN KEY (MGR) REFERENCES EMP1 (EMPNO);
+
+-- Q42) Remove the Manager constraint (added in Q41) from EMP table
+ALTER TABLE EMP DROP CONSTRAINT EMP_DEPT_FK;
+
+-- Q43) Remove the primary key constraint on the DEPT table and drop the associated foreign key constraint on the EMP.DEPTNO column
+ALTER TABLE DEPT DROP CONSTRAINT DEPT_PK CASCADE;
+
+-- Q44) Disable the primary key constraint of EMP table
+ALTER TABLE EMP DISABLE CONSTRAINT EMP_PK CASCADE;
+
+-- Q45) Enable the primary key constraint of EMP table
+ALTER TABLE EMP ENABLE CONSTRAINT EMP_PK;
+
+-- Q46) Query the USER_CONSTRAINTS table to view all constraint definitions and names
+SELECT CONSTRAINT_NAME, CONSTRAINT_TYPE, SEARCH_CONDITION FROM USER_CONSTRAINTS WHERE TABLE_NAME = 'EMP';
+
+-- Q47) View the columns associated with the constraint names in the USER_CONS_COLUMNS view
+SELECT CONSTRAINT_NAME, COLUMN_NAME FROM USER_CONS_COLUMNS WHERE TABLE_NAME = 'EMP';
+
+-- Q48) Update all the records of manager table by increasing 10% of their salary as bonus
+UPDATE MANAGER SET SAL = SAL * 1.1;
+
+-- Q49) Delete the records from manager table where the salary less than 2750
+DELETE FROM MANAGER WHERE SAL < 2750;
+
+-- Q50) Display each name of the employee as “Name” and annual salary as “Annual Salary” (Note: Salary in emp table is the monthly salary)
+SELECT ENAME AS "Name", SAL * 12 AS "Annual Salary" FROM EMP;
+
+-- Q51) List concatenated value of name and designation of each employee
+SELECT ENAME || ', ' || JOB AS "Name and Designation" FROM EMP;
+
+-- Q52) List the names of Clerks from emp table
+SELECT ENAME FROM EMP WHERE JOB = 'CLERK';
+
+-- Q53) List the Details of Employees who have joined before 30 Sept 81
+SELECT * FROM EMP WHERE HIREDATE < TO_DATE('30-09-1981', 'DD-MM-YYYY');
+
+-- Q54) List names of employees whose employee numbers are 7369, 7839, 7934, 7788
+SELECT ENAME FROM EMP WHERE EMPNO IN (7369, 7839, 7934, 7788);
+
+-- Q55) List the names of employee who are not Managers
+SELECT ENAME FROM EMP WHERE JOB != 'MANAGER';
+
+-- Q56) List the names of employees not belonging to dept no 30, 40 & 10
+SELECT ENAME FROM EMP WHERE DEPTNO NOT IN (30, 40, 10);
+
+-- Q57) List names of those employees joined between 30 June 81 and 31 Dec 81
+SELECT ENAME FROM EMP WHERE HIREDATE BETWEEN TO_DATE('30-06-1981', 'DD-MM-YYYY') AND TO_DATE('31-12-1981', 'DD-MM-YYYY');
+
+-- Q58) List different designations in the company
+SELECT DISTINCT JOB FROM EMP;
+
+-- Q59) List the names of employees not eligible for commission
+SELECT ENAME FROM EMP WHERE COMM IS NULL;
+
+-- Q60) List names and designations of employee who does not report to anybody
+SELECT ENAME, JOB FROM EMP WHERE EMPNO NOT IN (SELECT MGR FROM EMP);
+
+-- Q61) List all employees not assigned to any department
+SELECT ENAME FROM EMP WHERE DEPTNO IS NULL;
+
+-- Q62) List names of employee who are eligible for commission
+SELECT ENAME FROM EMP WHERE COMM IS NOT NULL;
+
+-- Q63) List employees whose name either start or end with ‘s’
+SELECT ENAME FROM EMP WHERE ENAME LIKE 'S%' OR ENAME LIKE '%S';
+
+-- Q64) List names of employees whose names have ‘i’ as the second character
+SELECT ENAME FROM EMP WHERE ENAME LIKE '_I%';
+
+-- Q65) Sort emp table in ascending order by hire-date and list ename, job, deptno and hire-date
+SELECT ENAME, JOB, DEPTNO, HIREDATE FROM EMP ORDER BY HIREDATE ASC;
+
+-- Q66) Sort emp table in descending order by annual salary and list empno, ename, job and annual-salary
+SELECT EMPNO, ENAME, JOB, SAL * 12 AS "Annual Salary" FROM EMP ORDER BY SAL DESC;
+
+-- Q67) List ename, deptno and sal after sorting emp table in ascending order by deptno and then descending order by sal
+SELECT ENAME, DEPTNO, SAL FROM EMP ORDER BY DEPTNO ASC, SAL DESC;
+
+-- Q68) Commit the transaction
+COMMIT;
+
+-- Q69) Change the column name from SAL to SALARY in the table EMP
+ALTER TABLE EMP RENAME COLUMN SAL TO SALARY;
+
+-- Q70) Add a new column named BONUS to the EMP table
+ALTER TABLE EMP ADD BONUS NUMBER;
+
+-- Q71) Update the BONUS column for all employees with a value of 100
+UPDATE EMP SET BONUS = 100;
+
+-- Q72) Delete the BONUS column from the EMP table
+ALTER TABLE EMP DROP COLUMN BONUS;
+
+-- Q73) Add a constraint to ensure that the SALARY column in the EMP table cannot be negative
+ALTER TABLE EMP ADD CONSTRAINT SALARY_NON_NEGATIVE CHECK (SALARY >= 0);
+
+-- Q74) Add a constraint to ensure that the DEPTNO column in the EMP table references the DEPTNO column in the DEPT table
+ALTER TABLE EMP ADD CONSTRAINT EMP_DEPT_FK FOREIGN KEY (DEPTNO) REFERENCES DEPT (DEPTNO);
+
+-- Q75) List all the constraints on the EMP table
+SELECT CONSTRAINT_NAME, CONSTRAINT_TYPE FROM USER_CONSTRAINTS WHERE TABLE_NAME = 'EMP';
+
+-- Q76) List all the indexes on the EMP table
+SELECT INDEX_NAME FROM USER_INDEXES WHERE TABLE_NAME = 'EMP';
+
+-- Q77) Create an index on the SALARY column of the EMP table
+CREATE INDEX SALARY_INDEX ON EMP(SALARY);
+
+-- Q78) Drop the index created in Q77
+DROP INDEX SALARY_INDEX;
+
+-- Q79) Create a sequence named EMP_SEQ
+CREATE SEQUENCE EMP_SEQ START WITH 1 INCREMENT BY 1;
+
+-- Q80) Use the sequence EMP_SEQ to insert a new employee into the EMP table
+INSERT INTO EMP (EMPNO, ENAME, JOB, MGR, HIREDATE, SALARY, DEPTNO) VALUES (EMP_SEQ.NEXTVAL, 'John Doe', 'Manager', NULL, SYSDATE, 5000, 10);
+
+-- Q81) Drop the sequence EMP_SEQ
+DROP SEQUENCE EMP_SEQ;
+
+-- Q82) Grant SELECT privilege on the EMP table to the user 'user1'
+GRANT SELECT ON EMP TO user1;
+
+-- Q83) Revoke INSERT privilege on the EMP table from the user 'user2'
+REVOKE INSERT ON EMP FROM user2;
+
+-- Q1) List the hiredate of employees who work in deptno 20 in a format like ‘WEDNESDAY JANUARY 12, 1983’
+SELECT TO_CHAR(HIREDATE, 'DAY MONTH DD, YYYY') AS "Hire Date"
+FROM EMP;
+
+-- Q2) Display the hiredate with time of employess who work in deptno 20.
+SELECT TO_CHAR(HIREDATE, 'DD-MON-YYYY HH:MI:SS AM') AS "Hire Date with Time"
+FROM EMP
+WHERE DEPTNO = 20;
+
+-- Q3) Each employee receives a salary review after every 150 days of service. Now list employee name, hiredate and first salary review date of each employee who work in dept no 20.
+SELECT ENAME, HIREDATE, HIREDATE + 150 AS "First Salary Review Date"
+FROM EMP
+WHERE DEPTNO = 20;
+
+-- Q4) Date Functions
+-- Already listed in the provided table.
+
+-- Q5) Character Functions
+-- Already listed in the provided table.
+
+-- Q6) Conversion Functions
+-- Already listed in the provided table.
+
+-- Q7) Numeric Functions
+-- Already listed in the provided table.
+
+-- Q9) Find number of rows in the table EMP
+SELECT COUNT(*) AS "Number of Rows"
+FROM EMP;
+
+-- Q10) Find number of designations available in EMP table.
+SELECT COUNT(DISTINCT JOB) AS "Number of Designations"
+FROM EMP;
+
+-- Q11) Find number of employees who earn commission in EMP table.
+SELECT COUNT(*) AS "Number of Employees with Commission"
+FROM EMP
+WHERE COMM IS NOT NULL;
+
+-- Q12) What is the difference between the following queries
+-- SQL > select count(comm) from emp;
+-- SQL > select count(nvl(comm,0)) from emp;
+-- The first query counts the number of non-null values in the comm column,
+-- while the second query counts the number of occurrences of comm column, replacing NULL values with 0.
+
+-- Q13) Find the total salary paid to the employees.
+SELECT SUM(SAL) AS "Total Salary Paid"
+FROM EMP;
+
+-- Q14) Find maximum, minimum and average salary in EMP table.
+SELECT MAX(SAL) AS "Maximum Salary",
+       MIN(SAL) AS "Minimum Salary",
+       AVG(SAL) AS "Average Salary"
+FROM EMP;
+
+-- Q16) Find the maximum salary paid to a ‘CLERK’
+SELECT MAX(SAL) AS "Maximum Salary for CLERK"
+FROM EMP
+WHERE JOB = 'CLERK';
+
+-- Q17) List the department numbers and number of employees in each department
+SELECT DEPTNO, COUNT(*) AS "Number of Employees"
+FROM EMP
+GROUP BY DEPTNO;
+
+-- Q18) List the jobs and number of employees in each job. The result should be in the descending order of the number of employees.
+SELECT JOB, COUNT(*) AS "Number of Employees"
+FROM EMP
+GROUP BY JOB
+ORDER BY COUNT(*) DESC;
+
+-- Q19) List the total salary, maximum and minimum salary and average salary of the employees jobwise.
+SELECT JOB,
+       SUM(SAL) AS "Total Salary",
+       MAX(SAL) AS "Maximum Salary",
+       MIN(SAL) AS "Minimum Salary",
+       AVG(SAL) AS "Average Salary"
+FROM EMP
+GROUP BY JOB;
+
+-- Q20) List the total salary, maximum and minimum salary and average salary of the employees jobwise, for department 20 and display only those rows having an average salary > 1000.
+SELECT JOB,
+       SUM(SAL) AS "Total Salary",
+       MAX(SAL) AS "Maximum Salary",
+       MIN(SAL) AS "Minimum Salary",
+       AVG(SAL) AS "Average Salary"
+FROM EMP
+WHERE DEPTNO = 20
+GROUP BY JOB
+HAVING AVG(SAL) > 1000;
+
+-- Q21) List the job and total salary of employees jobwise, for jobs other than ‘PRESIDENT’ and display only those rows having total salary > 5000.
+SELECT JOB, SUM(SAL) AS "Total Salary"
+FROM EMP
+WHERE JOB != 'PRESIDENT'
+GROUP BY JOB
+HAVING SUM(SAL) > 5000;
+
+-- Q22) List the job, number of employees and average salary of employees jobwise. Display only the rows where the number of employees in each job is more than two.
+SELECT JOB,
+       COUNT(*) AS "Number of Employees",
+       AVG(SAL) AS "Average Salary"
+FROM EMP
+GROUP BY JOB
+HAVING COUNT(*) > 2;
+
+
+-- Q1) Create the following tables: depositor(cus_name, acno) & borrower(cus_name, loanno)
+CREATE TABLE depositor (
+    cus_name VARCHAR(50),
+    acno VARCHAR(20)
+);
+
+CREATE TABLE borrower (
+    cus_name VARCHAR(50),
+    loanno VARCHAR(20)
+);
+
+-- Q2) List the names of distinct customers who have either loan or account
+SELECT DISTINCT cus_name FROM (
+    SELECT cus_name FROM depositor
+    UNION----(or)
+    SELECT cus_name FROM borrower
+) AS DistinctCustomers;
+
+-- Q3) List the names of customers (with duplicates) who have either loan or account
+SELECT cus_name FROM borrower
+UNION ALL
+SELECT cus_name FROM depositor;
+
+-- Q4) List the names of customers who have both loan and account
+SELECT cus_name FROM (
+    SELECT cus_name FROM depositor
+    INTERSECT----(and)
+    SELECT cus_name FROM borrower
+) AS CustomersWithBoth;
+
+-- Q5) List the names of customers who have loan but not account
+SELECT cus_name FROM borrower
+MINUS----(not)
+SELECT cus_name FROM depositor;
+
+-- Q6) List empno, ename, deptno from emp and dept tables
+SELECT e.empno, e.ename, e.deptno
+FROM emp e
+JOIN dept d ON e.deptno = d.deptno;
+
+-- Q7) Create a table Salgrade and list ename, sal, and salgrade of all employees
+CREATE TABLE Salgrade (
+    Grade NUMBER,
+    Losal NUMBER,
+    Hisal NUMBER
+);
+
+-- Assuming EMP table has columns ename, sal, and deptno
+SELECT e.ename, e.sal, s.Grade
+FROM emp e
+JOIN Salgrade s ON e.sal BETWEEN s.Losal AND s.Hisal;
+
+-- Q8) List ename, deptno, and deptname from emp and dept tables, including unmatched rows from emp
+SELECT e.ename, e.deptno, d.dname
+FROM emp e
+LEFT JOIN dept d ON e.deptno = d.deptno;
+
+-- Q9) List ename, deptno, and deptname from emp and dept tables, including unmatched rows from dept
+SELECT e.ename, e.deptno, d.dname
+FROM emp e
+RIGHT JOIN dept d ON e.deptno = d.deptno;
+
+-- Q10) List the names of the employee with name of his/her manager from emp table
+SELECT e.ename AS "Employee Name", m.ename AS "Manager Name"
+FROM emp e
+LEFT JOIN emp m ON e.mgr = m.empno;
+
+-- Q1) List the name of the employees whose salary is greater than that of employee with empno 7566
+SELECT ename
+FROM employee
+WHERE sal > (SELECT sal FROM employee WHERE empno = 7566);
+
+-- Q2) List the name of the employees whose job is equal to the job of employee with empno 7369 and salary is greater than that of employee with empno 7876
+SELECT ename
+FROM employee
+WHERE job = (SELECT job FROM employee WHERE empno = 7369)
+AND sal > (SELECT sal FROM employee WHERE empno = 7876);
+
+-- Q3) List the ename, job, sal of the employee who get minimum salary in the company
+SELECT ename, job, sal
+FROM employee
+WHERE sal = (SELECT MIN(sal) FROM employee);
+
+-- Q4) List deptno & min(salary) departmentwise, only if min(sal) is greater than the min(sal) of deptno 20
+SELECT deptno, MIN(sal)
+FROM employee
+GROUP BY deptno
+HAVING MIN(sal) > (SELECT MIN(sal) FROM employee WHERE deptno = 20);
+
+-- Q5) List empno, ename, job of the employees whose job is not a ‘CLERK’ and whose salary is less than at least one of the salaries of the employees whose job is ‘CLERK’
+SELECT empno, ename, job
+FROM employee
+WHERE job <> 'CLERK' AND sal < ANY (SELECT sal FROM employee WHERE job = 'CLERK');
+
+-- Q6) List empno, ename, job of the employees whose salary is greater than the average salary of each department
+SELECT e.empno, e.ename, e.job
+FROM employee e
+JOIN (
+    SELECT deptno, AVG(sal) AS avg_sal
+    FROM employee
+    GROUP BY deptno
+) AS dept_avg ON e.deptno = dept_avg.deptno
+WHERE e.sal > dept_avg.avg_sal;
+
+-- Q7) Display the name, dept. no, salary, and commission of any employee whose salary and commission matches both the commission and salary of any employee in department 30
+SELECT ename, deptno, sal, comm
+FROM employee
+WHERE (sal, NVL(comm, -1)) IN (
+    SELECT sal, NVL(comm, -1)
+    FROM employee
+    WHERE deptno = 30
+);
+
+-- Q8) List ename, deptno, sal, average salary of the dept where he/she works, if salary of the employee is greater than his/her department average salary
+SELECT e.ename, e.deptno, e.sal, d.avg_sal
+FROM employee e
+JOIN (
+    SELECT deptno, AVG(sal) AS avg_sal
+    FROM employee
+    GROUP BY deptno
+) AS d ON e.deptno = d.deptno
+WHERE e.sal > d.avg_sal;
+
+-- Q9) Execute and Write the output of the following query in words
+-- This query calculates the total salary for each department and filters out departments whose total salary exceeds one-third of the total salary across all departments.
+WITH summary AS (
+    SELECT dname, SUM(sal) AS dept_total
+    FROM employee e
+    JOIN department d ON e.deptno = d.deptno
+    GROUP BY dname
+)
+SELECT dname, dept_total
+FROM summary
+WHERE dept_total > (SELECT SUM(dept_total) * (1 / 3) FROM summary)
+ORDER BY dept_total DESC;
+
+-- Q10) List ename, job, sal of the employees whose salary is equal to any one of the salary of the employee ‘SCOTT’ and ‘WARD’
+SELECT ename, job, sal
+FROM employee
+WHERE sal IN (SELECT sal FROM employee WHERE ename IN ('SCOTT', 'WARD'));
+
+-- Q11) List ename, job, sal of the employees whose salary and job is equal to the employee ‘FORD’
+SELECT ename, job, sal
+FROM employee
+WHERE job = (SELECT job FROM employee WHERE ename = 'FORD')
+AND sal = (SELECT sal FROM employee WHERE ename = 'FORD');
+
+-- Q12) List ename, job, deptno, sal of the employees whose job is same as ‘JONES’ and salary is greater than the employee ‘FORD’
+SELECT ename, job, deptno, sal
+FROM employee
+WHERE job = (SELECT job FROM employee WHERE ename = 'JONES')
+AND sal > (SELECT sal FROM employee WHERE ename = 'FORD');
+
+-- Q13) List ename, job of the employees who work in deptno 10 and his/her job is any one
+-- of the job in the department ‘SALES’
+SELECT ename, job
+FROM employee
+WHERE deptno = 10
+AND job IN (SELECT DISTINCT job FROM employee WHERE deptno = 20);
+
+-- Q14) Execute the following query and write the result in word
+SELECT job, ename, empno, deptno
+FROM emp s
+WHERE EXISTS (
+    SELECT *
+    FROM emp
+    WHERE s.empno = mgr
+)
+ORDER BY empno;
+
+-- This query selects the job, employee name, employee number, and department number from the emp table, 
+-- where there exists another employee whose employee number matches the manager ID of the employee selected.
+-- It retrieves the details of employees who have a manager.
+-- Q2) Create a view with column aliases empv30 that contains empno, ename, sal of the employees who work in dept 30.
+-- Also display the contents of the view.
+CREATE OR REPLACE VIEW empv30 AS
+SELECT empno, ename, sal
+FROM emp
+WHERE deptno = 30;
+
+SELECT * FROM empv30;
+
+-- Q5) Using emp table, create a view pay which contains ename, monthly_sal, annual_sal, deptno.
+CREATE VIEW pay AS
+SELECT ename, sal AS monthly_sal, sal * 12 AS annual_sal, deptno
+FROM emp;
+
+-- Q6) Create a view dept_stat which contains department no., department name, minimum salary, maximum salary, total salary.
+CREATE VIEW dept_stat AS
+SELECT d.deptno, d.dname, MIN(e.sal) AS min_sal, MAX(e.sal) AS max_sal, SUM(e.sal) AS total_sal
+FROM dept d
+LEFT JOIN emp e ON d.deptno = e.deptno
+GROUP BY d.deptno, d.dname;
+
+-- Q9) Delete the view empv20.
+DROP VIEW empv20;
+
+-- Q10) Get full details of all projects in London.
+SELECT *
+FROM projects
+WHERE city = 'London';
+
+-- Q11) Get Supplyno for suppliers who supply project J1.
+SELECT DISTINCT Supplyno
+FROM supplies
+WHERE Jobno = 'J1';
+
+-- Q12) Get all part-color/part-city combinations.
+SELECT DISTINCT part_color, part_city
+FROM parts;
+
+-- Q13) Get all Supplyno/Partno/Jobno triples such that all are co-located.
+SELECT Supplyno, Partno, Jobno
+FROM supplies
+WHERE EXISTS (
+    SELECT *
+    FROM projects
+    WHERE projects.City = supplies.City
+);
+
+-- Q14) Get al Supplyno, Partno, Jobno triples such that they are not all co-located.
+SELECT Supplyno, Partno, Jobno
+FROM supplies
+WHERE NOT EXISTS (
+    SELECT *
+    FROM projects
+    WHERE projects.City = supplies.City
+);
+
+-- Q15) Get Partno for parts supplied by a supplier in London.
+SELECT DISTINCT Partno
+FROM supplies
+WHERE Supplier = ANY (
+    SELECT DISTINCT Supplyno
+    FROM suppliers
+    WHERE City = 'London'
+);
+
+-- Q16) Get all pairs of cities such that a supplier in the first city supplies to a Project in the second city.
+SELECT DISTINCT s1.City AS supplier_city, p.City AS project_city
+FROM supplies s
+JOIN projects p ON s.Jobno = p.Jobno
+JOIN suppliers s1 ON s.Supplyno = s1.Supplyno;
+
+-- Q17) Get Jobno for projects supplied by at least one supplier not in the same city.
+SELECT DISTINCT p.Jobno
+FROM projects p
+JOIN supplies s ON p.Jobno = s.Jobno
+WHERE NOT EXISTS (
+    SELECT *
+    FROM suppliers
+    WHERE suppliers.Supplyno = s.Supplyno
+    AND suppliers.City = p.City
+);
+
+-- Q18) Get supplier numbers for suppliers with a status lower than that of supplier S1.
+SELECT Supplier
+FROM suppliers
+WHERE Status < (SELECT Status FROM suppliers WHERE Supplier = 'S1');
+
+-- Q19) Get project numbers for projects not supplied with any red part by any London supplier.
+SELECT DISTINCT Jobno
+FROM supplies
+WHERE Jobno NOT IN (
+    SELECT Jobno
+    FROM supplies s
+    JOIN parts p ON s.Partno = p.Partno
+    JOIN suppliers s1 ON s.Supplyno = s1.Supplyno
+    WHERE s1.City = 'London' AND p.Part_color = 'Red'
+);
+
+-- Q20) Find out the selling cost average for packages developed in Oracle.
+SELECT AVG(Selling_Cost)
+FROM packages
+WHERE Developed_In = 'Oracle';
+
+-- Q21) Display the names, ages and experience of all programmers.
+SELECT Name, Age, Experience
+FROM programmers;
+
+-- Q22) Display the names of those who have done the PGDCA course.
+SELECT Name
+FROM programmers
+WHERE Course = 'PGDCA';
+
+-- Q23) What is the highest number of copies sold by a package?
+SELECT MAX(Copies_Sold)
+FROM packages;
+
+-- Q24) Display the names and date of birth of all programmers born in April.
+SELECT Name, Date_of_Birth
+FROM programmers
+WHERE MONTH(Date_of_Birth) = 4;
+
+-- Q25) Display the lowest course fee.
+SELECT MIN(Course_Fee)
+FROM programmers;
+
+-- Q26) How many programmers have done the DCA course.
+SELECT COUNT(*)
+FROM programmers
+WHERE Course = 'DCA';
+
+-- Q27) How much revenue has been earned through the sale of packages developed in C.
+SELECT SUM(Selling_Cost)
+FROM packages
+WHERE Developed_In = 'C';
+
+-- Q28) Display the details of software developed by Rakesh.
+SELECT *
+FROM packages
+WHERE Developer = 'Rakesh';
+
+-- Q29) How many programmers studied at Pentafour.
+SELECT COUNT(*)
+FROM programmers
+WHERE Institute = 'Pentafour';
+
+-- Q30) Display the details of those who don’t know C and C++ or Pascal.
+SELECT *
+FROM programmers
+WHERE NOT (Language = 'C' OR Language = 'C++' OR Language = 'Pascal');
+
+-- Q31) Display the costliest package developed by each programmer.
+SELECT Developer, MAX(Selling_Cost) AS Costliest_Package
+FROM packages
+GROUP BY Developer;
+
+-- Q32) Produce the following output for all the male programmers: Programmer Mr. Arvind – has 15 years of experience
+SELECT CONCAT('Programmer Mr. ', Name, ' - has ', Experience, ' years of experience') AS Output
+FROM programmers
+WHERE Gender = 'Male';
+
+-- Q33) List all the employees who have at least one person reporting to them.
+SELECT e1.*
+FROM employees e1
+INNER JOIN employees e2 ON e1.emp_id = e2.manager_id;
+
+-- Q34) List the employee details if and only if more than 10 employees are present in department no 10.
+SELECT *
+FROM employees
+WHERE dept_no = 10
+HAVING COUNT(*) > 10;
+
+-- Q35) List the name of the employees with their immediate higher authority.
+SELECT e1.emp_name, e2.emp_name AS Higher_Authority
+FROM employees e1
+LEFT JOIN employees e2 ON e1.manager_id = e2.emp_id;
+
+-- Q36) List all the employees who do not manage anyone.
+SELECT e.*
+FROM employees e
+LEFT JOIN employees e1 ON e.emp_id = e1.manager_id
+WHERE e1.manager_id IS NULL;
+
+-- Q37) List the employee details whose salary is greater than the lowest salary of an employee belonging to deptno 20.
+SELECT *
+FROM employees
+WHERE salary > (SELECT MIN(salary) FROM employees WHERE dept_no = 20);
+
+-- Q38) List the details of the employee earning more than the highest paid manager.
+SELECT e.*
+FROM employees e
+WHERE salary > (SELECT MAX(salary) FROM employees WHERE emp_id = manager_id);
+
+-- Q39) List the highest salary paid for each job.
+SELECT job_title, MAX(salary) AS highest_salary
+FROM employees
+GROUP BY job_title;
+
+-- Q40) Find the most recently hired employee in each department.
+SELECT *
+FROM employees
+WHERE (dept_no, hire_date) IN (
+    SELECT dept_no, MAX(hire_date) AS max_hire_date
+    FROM employees
+    GROUP BY dept_no
+);
+
+-- Q41) In which year did most people join the company? Display the year and the number of employees.
+SELECT YEAR(hire_date) AS join_year, COUNT(*) AS num_employees
+FROM employees
+GROUP BY YEAR(hire_date)
+ORDER BY num_employees DESC
+LIMIT 1;
+
+-- Q42) Which department has the highest annual remuneration bill?
+SELECT dept_no, SUM(salary * 12) AS annual_remuneration
+FROM employees
+GROUP BY dept_no
+ORDER BY annual_remuneration DESC
+LIMIT 1;
+
+-- Q43) Write a query to display a ‘*’ against the row of the most recently hired employee.
+SELECT *,
+       CASE WHEN hire_date = (SELECT MAX(hire_date) FROM employees) THEN '*' ELSE '' END AS recently_hired
+FROM employees;
+
+-- Q44) Write a correlated sub-query to list out the employees who earn more than the average salary of their department.
+SELECT *
+FROM employees e
+WHERE salary > (SELECT AVG(salary) FROM employees WHERE dept_no = e.dept_no);
+
+-- Q45) Find the nth maximum salary.
+SELECT DISTINCT salary
+FROM employees e1
+WHERE n = (
+    SELECT COUNT(DISTINCT salary)
+    FROM employees e2
+    WHERE e1.salary <= e2.salary
+);
+
+-- Q46) Select the duplicate records (Records, which are inserted, that already exist) in the EMP table.
+SELECT emp_id, emp_name, dept_no, salary
+FROM employees
+GROUP BY emp_id, emp_name, dept_no, salary
+HAVING COUNT(*) > 1;
+
+-- Q47) Write a query to list the length of service of the employees (of the form n years and m months).
+SELECT emp_id, emp_name,
+       CONCAT(
+           FLOOR(DATEDIFF(CURRENT_DATE(), hire_date) / 365), ' years ',
+           FLOOR(MOD(DATEDIFF(CURRENT_DATE(), hire_date), 365) / 30.44), ' months'
+       ) AS length_of_service
+FROM employees;
+
+-- Q48) Solutions for Q48 will depend on the specific SQL syntax and database management system being used. Please provide more details or specify the DBMS to proceed with the creation of tables and constraints.
+
+-- Q49) What are the names of customers who have sent packages (shipments) to Sioux City?
+SELECT DISTINCT c.cust_name
+FROM shipment s
+JOIN customer c ON s.cust_id = c.cust_id
+WHERE s.destination = 'Sioux City';
+
+-- Q50) To what destinations have companies with revenue less than $1 million sent packages?
+SELECT DISTINCT s.destination
+FROM shipment s
+JOIN customer c ON s.cust_id = c.cust_id
+WHERE c.annual_revenue < 1000000;
+
+-- Q51) What are the names and populations of cities that have received shipments weighing over 100 pounds?
+SELECT DISTINCT c.city_name, ci.population
+FROM shipment s
+JOIN city c ON s.destination = c.city_name
+JOIN customer cu ON s.cust_id = cu.cust_id
+JOIN city ci ON cu.city_name = ci.city_name
+WHERE s.weight > 100;
+
+-- Q52) Who are the customers having over $5 million in annual revenue who have sent shipments weighing less than 1 pound?
+SELECT cu.cust_name
+FROM customer cu
+JOIN shipment s ON cu.cust_id = s.cust_id
+WHERE cu.annual_revenue > 5000000
+AND s.weight < 1;
+
+-- Q53) Who are the customers having over $5 million in annual revenue who have sent shipments weighing less than 1 pound or have sent a shipment to San Francisco?
+SELECT DISTINCT cu.cust_name
+FROM customer cu
+JOIN shipment s ON cu.cust_id = s.cust_id
+WHERE cu.annual_revenue > 5000000
+AND (s.weight < 1 OR s.destination = 'San Francisco');
+
+-- Q54) Who are the drivers who have delivered shipments for customers with annual revenue over $20 million to cities with populations over 1 million?
+SELECT DISTINCT t.driver_name
+FROM shipment s
+JOIN truck t ON s.truck_no = t.truck_no
+JOIN customer cu ON s.cust_id = cu.cust_id
+JOIN city c ON s.destination = c.city_name
+WHERE cu.annual_revenue > 20000000
+AND c.population > 1000000;
+
+-- Q55) List the cities that have received shipments from customers having over $15 million in annual revenue.
+SELECT DISTINCT s.destination
+FROM shipment s
+JOIN customer cu ON s.cust_id = cu.cust_id
+WHERE cu.annual_revenue > 15000000;
+
+-- Q56) List the names of drivers who have delivered shipments weighing over 100 pounds.
+SELECT DISTINCT t.driver_name
+FROM shipment s
+JOIN truck t ON s.truck_no = t.truck_no
+WHERE s.weight > 100;
+
+-- Q57) List the name and annual revenue of customers who have sent shipments weighing over 100 pounds.
+SELECT DISTINCT cu.cust_name, cu.annual_revenue
+FROM customer cu
+JOIN shipment s ON cu.cust_id = s.cust_id
+WHERE s.weight > 100;
+
+-- Q58) List the name and annual revenue of customers whose shipments have been delivered by truck driver Jensen.
+SELECT DISTINCT cu.cust_name, cu.annual_revenue
+FROM customer cu
+JOIN shipment s ON cu.cust_id = s.cust_id
+JOIN truck t ON s.truck_no = t.truck_no
+WHERE t.driver_name = 'Jensen';
+
+-- Q59) List customers who had shipments delivered by every truck. ( use NOT EXISTS)
+SELECT DISTINCT cu.cust_name
+FROM customer cu
+WHERE NOT EXISTS (
+    SELECT *
+    FROM truck t
+    WHERE NOT EXISTS (
+        SELECT *
+        FROM shipment s
+        WHERE s.cust_id = cu.cust_id AND s.truck_no = t.truck_no
+    )
+);
+
+-- Q60) List cities that have received shipments from every customer. ( use NOT EXISTS)
+SELECT DISTINCT s.destination
+FROM shipment s
+WHERE NOT EXISTS (
+    SELECT *
+    FROM customer cu
+    WHERE NOT EXISTS (
+        SELECT *
+        FROM shipment s1
+        WHERE s1.cust_id = cu.cust_id AND s1.destination = s.destination
+    )
+);
+
+-- Q61) List drivers who have delivered shipments to every city. (use NOT EXISTS)
+SELECT DISTINCT t.driver_name
+FROM truck t
+WHERE NOT EXISTS (
+    SELECT *
+    FROM city c
+    WHERE NOT EXISTS (
+        SELECT *
+        FROM shipment s
+        WHERE s.truck_no = t.truck_no AND s.destination = c.city_name
+    )
+);
+
+-- Q62) Customers who are manufacturers or have sent a package to St. Louis.
+SELECT DISTINCT cu.cust_name
+FROM customer cu
+JOIN shipment s ON cu.cust_id = s.cust_id
+WHERE cu.cust_type = 'manufacturer'
+OR s.destination = 'St. Louis';
+
+-- Q63) Cities of population over 1 million which have received a 100-pound package from customer 311.
+SELECT DISTINCT c.city_name
+FROM city c
+JOIN shipment s ON c.city_name = s.destination
+JOIN customer cu ON s.cust_id = cu.cust_id
+WHERE c.population > 1000000
+AND s.weight = 100
+AND cu.cust_id = 311;
+
+-- Q64) Trucks driven by Jake Stinson which have never delivered a shipment to Denver.
+SELECT DISTINCT t.truck_no
+FROM truck t
+WHERE t.driver_name = 'Jake Stinson'
+AND NOT EXISTS (
+    SELECT *
+    FROM shipment s
+    WHERE s.truck_no = t.truck_no AND s.destination = 'Denver'
+);
+
+-- Q65) Customers with annual revenue over $10 million which have sent packages under 1 pound to cities with population less than 10,000.
+SELECT DISTINCT cu.cust_name
+FROM customer cu
+JOIN shipment s ON cu.cust_id = s.cust_id
+JOIN city c ON s.destination = c.city_name
+WHERE cu.annual_revenue > 10000000
+AND s.weight < 1
+AND c.population < 10000;
+
+-- Q66) Create views for each of the following:
+-- a. Customers with annual revenue under $1 million.
+CREATE VIEW customers_under_1m AS
+SELECT *
+FROM customer
+WHERE annual_revenue < 1000000;
+
+-- b. Customers with annual revenue between $1 million and $5 million.
+CREATE VIEW customers_between_1m_and_5m AS
+SELECT *
+FROM customer
+WHERE annual_revenue BETWEEN 1000000 AND 5000000;
+
+-- c. Customers with annual revenue over $5 million.
+CREATE VIEW customers_over_5m AS
+SELECT *
+FROM customer
+WHERE annual_revenue > 500000
+
+
+-- Q67) Use these views to answer the following queries:
+-- a. Which drivers have taken shipments to Los Angeles for customers with revenue over $5 million?
+SELECT DISTINCT t.driver_name
+FROM truck t
+JOIN shipment s ON t.truck_no = s.truck_no
+JOIN customers_over_5m cu ON s.cust_id = cu.cust_id
+JOIN city c ON s.destination = c.city_name
+WHERE c.city_name = 'Los Angeles';
+
+-- b. What are the populations of cities which have received shipments from customers with revenue between $1 million and $5 million?
+SELECT DISTINCT c.population
+FROM city c
+JOIN shipment s ON c.city_name = s.destination
+JOIN customers_between_1m_and_5m cu ON s.cust_id = cu.cust_id;
+
+-- c. Which drivers have taken shipments to cities for customers with revenue under $1 million, and what are the populations of those cities?
+SELECT DISTINCT t.driver_name, c.population
+FROM truck t
+JOIN shipment s ON t.truck_no = s.truck_no
+JOIN customers_under_1m cu ON s.cust_id = cu.cust_id
+JOIN city c ON s.destination = c.city_name;
+
+-- Q1) Write a PL/SQL Block to find the maximum of 3 Numbers
+DECLARE
+    a NUMBER;
+    b NUMBER;
+    c NUMBER;
+BEGIN
+    dbms_output.put_line('Enter a:');
+    a := &a;
+    dbms_output.put_line('Enter b:');
+    b := &b;
+    dbms_output.put_line('Enter c:');
+    c := &c;
+    IF (a > b) AND (a > c) THEN
+        dbms_output.put_line('A is Maximum');
+    ELSIF (b > a) AND (b > c) THEN
+        dbms_output.put_line('B is Maximum');
+    ELSE
+        dbms_output.put_line('C is Maximum');
+    END IF;
+END;
+/
+
+-- Q2) Write a PL/SQL Block to find the sum of odd numbers up to 100 using loop statement
+DECLARE
+    total_sum NUMBER := 0;
+    i NUMBER;
+BEGIN
+    FOR i IN 1..100 LOOP
+        IF MOD(i, 2) != 0 THEN
+            total_sum := total_sum + i;
+        END IF;
+    END LOOP;
+    dbms_output.put_line('Sum of odd numbers up to 100 is: ' || total_sum);
+END;
+/
+
+-- Q3) Write a PL/SQL block to get the salary of the employee who has empno=7369 and update his salary as specified below
+-- - if his/her salary < 2500, then increase salary by 25%
+-- - otherwise if salary lies between 2500 and 5000, then increase salary by 20%
+-- - otherwise increase salary by adding commission amount to the salary.
+DECLARE
+    v_salary NUMBER;
+    v_commission NUMBER;
+BEGIN
+    SELECT sal, NVL(comm, 0) INTO v_salary, v_commission FROM emp WHERE empno = 7369;
+    
+    IF v_salary < 2500 THEN
+        v_salary := v_salary + (v_salary * 0.25);
+    ELSIF v_salary >= 2500 AND v_salary <= 5000 THEN
+        v_salary := v_salary + (v_salary * 0.20);
+    ELSE
+        v_salary := v_salary + v_commission;
+    END IF;
+    
+    UPDATE emp SET sal = v_salary WHERE empno = 7369;
+    COMMIT;
+END;
+/
+
+-- Q4) Write a PL/SQL Block to modify the department name of the department 71 if it is not ‘HRD’.
+DECLARE
+    v_deptname dept.dname%TYPE;
+BEGIN
+    SELECT dname INTO v_deptname FROM dept WHERE deptno = 71;
+    
+    IF v_deptname != 'HRD' THEN
+        UPDATE dept SET dname = 'HRD' WHERE deptno = 71;
+        COMMIT;
+    END IF;
+END;
+/
+
+-- Q5) Write a PL/SQL block to update salaries of all the employees who work in deptno 20 by 15%. If none of the employee’s salary are updated display a message 'None of the salaries were updated'. Otherwise display the total number of employees who got salary updated.
+DECLARE
+    v_count NUMBER := 0;
+BEGIN
+    UPDATE emp SET sal = sal * 1.15 WHERE deptno = 20;
+    v_count := SQL%ROWCOUNT;
+    
+    IF v_count = 0 THEN
+        dbms_output.put_line('None of the salaries were updated');
+    ELSE
+        dbms_output.put_line('Salaries for ' || v_count || ' employees are updated');
+    END IF;
+END;
+/
+-- Q6) Create a table emp_grade with columns empno & grade. Write PL/SQL block to insert values into the table emp_grade by processing emp table with the following constraints.
+-- If sal <= 1400 then grade is ’C’
+-- Else if sal between 1401 and 2000 then the grade is ‘B’
+-- Else the grade is ‘A’.
+CREATE TABLE emp_grade (
+    empno NUMBER,
+    grade CHAR(1)
+);
+
+DECLARE
+    v_grade CHAR(1);
+BEGIN
+    FOR emp_rec IN (SELECT empno, sal FROM emp) LOOP
+        IF emp_rec.sal <= 1400 THEN
+            v_grade := 'C';
+        ELSIF emp_rec.sal BETWEEN 1401 AND 2000 THEN
+            v_grade := 'B';
+        ELSE
+            v_grade := 'A';
+        END IF;
+        
+        INSERT INTO emp_grade (empno, grade) VALUES (emp_rec.empno, v_grade);
+    END LOOP;
+    COMMIT;
+END;
+/
+
+-- Q7) Write a PL/SQL block to do the following:
+-- a. Total wages of the company (Sum of the salaries and commission values of all the employees in emp table)
+-- b. Total number of highly paid employees. (Employees with salary > 2000)
+-- c. Total number of employees who get commission that is higher than their salary.
+DECLARE
+    v_total_wages NUMBER := 0;
+    v_highly_paid_count NUMBER := 0;
+    v_commission_gt_salary_count NUMBER := 0;
+BEGIN
+    SELECT SUM(NVL(sal, 0) + NVL(comm, 0)) INTO v_total_wages FROM emp;
+    
+    SELECT COUNT(*) INTO v_highly_paid_count FROM emp WHERE sal > 2000;
+    
+    SELECT COUNT(*) INTO v_commission_gt_salary_count FROM emp WHERE comm > sal;
+    
+    dbms_output.put_line('Total wages of the company: ' || v_total_wages);
+    dbms_output.put_line('Total number of highly paid employees: ' || v_highly_paid_count);
+    dbms_output.put_line('Total number of employees with commission higher than salary: ' || v_commission_gt_salary_count);
+END;
+/
+
+-- Q8) Write a PL/SQL block to find the name and salary of first five highly paid employees.
+DECLARE
+    CURSOR c_highly_paid IS
+        SELECT ename, sal FROM emp WHERE ROWNUM <= 5 ORDER BY sal DESC;
+    v_counter NUMBER := 0;
+BEGIN
+    FOR emp_rec IN c_highly_paid LOOP
+        v_counter := v_counter + 1;
+        dbms_output.put_line('Employee ' || v_counter || ': ' || emp_rec.ename || ', Salary: ' || emp_rec.sal);
+    END LOOP;
+END;
+/
+
+-- Q9) Solve the program in question number Q4 using cursor for…loop
+DECLARE
+    CURSOR c_dept IS
+        SELECT dname FROM dept WHERE deptno = 71 FOR UPDATE;
+    v_deptname dept.dname%TYPE;
+BEGIN
+    OPEN c_dept;
+    FETCH c_dept INTO v_deptname;
+    
+    IF v_deptname != 'HRD' THEN
+        UPDATE dept SET dname = 'HRD' WHERE CURRENT OF c_dept;
+        COMMIT;
+    END IF;
+    
+    CLOSE c_dept;
+END;
+/
+
+-- Q10) Write a PL/SQL block to find the names of employees & job and total number of employees who have more than 28 years of service in the company. (Use for loop)
+DECLARE
+    v_years_of_service NUMBER;
+    v_employee_count NUMBER := 0;
+BEGIN
+    FOR emp_rec IN (SELECT ename, job, hiredate FROM emp) LOOP
+        v_years_of_service := ROUND(MONTHS_BETWEEN(SYSDATE, emp_rec.hiredate) / 12);
+        IF v_years_of_service > 28 THEN
+            dbms_output.put_line('Employee Name: ' || emp_rec.ename || ', Job: ' || emp_rec.job);
+            v_employee_count := v_employee_count + 1;
+        END IF;
+    END LOOP;
+    
+    dbms_output.put_line('Total number of employees with more than 28 years of service: ' || v_employee_count);
+END;
+/
+
+-- Q11) Before Update: Row level Trigger
+-- Employees may get promoted and continue servicing with new designation. To maintain the job history of the employees, create a table job_history with columns empno, ename, job, pro_date, and create a trigger to update the table job_history whenever there is an updation in job column of any row in emp table.
+CREATE TABLE job_history (
+    empno NUMBER,
+    ename VARCHAR2(50),
+    job VARCHAR2(50),
+    pro_date DATE
+);
+
+CREATE OR REPLACE TRIGGER job_history_trigger
+BEFORE UPDATE OF job ON emp
+FOR EACH ROW
+BEGIN
+    IF :OLD.job != :NEW.job THEN
+        INSERT INTO job_history (empno, ename, job, pro_date)
+        VALUES (:OLD.empno, :OLD.ename, :OLD.job, SYSDATE);
+    END IF;
+END;
+/
+
+-- Q12) Before Insert: Row level Trigger
+-- Create a trigger to convert employee name into upper case, before we insert any row into the table emp with employee name in either case.
+CREATE OR REPLACE TRIGGER name_uppercase_trigger
+BEFORE INSERT ON emp
+FOR EACH ROW
+BEGIN
+    :NEW.ename := UPPER(:NEW.ename);
+END;
+/
+
+-- Q13) After Delete: Row level Trigger
+-- Consider tables dept and deptold with same structure. Create a trigger to move the row into second table whenever a row is removed from first table.
+CREATE TABLE deptold AS SELECT * FROM dept WHERE 1 = 0;
+
+CREATE OR REPLACE TRIGGER dept_backup_trigger
+AFTER DELETE ON dept
+FOR EACH ROW
+BEGIN
+    INSERT INTO deptold VALUES (:OLD.deptno, :OLD.dname, :OLD.loc);
+END;
+/
+
+-- Q14) Create a trigger which will not allow you to enter duplicate or null values in column empno of emp table.
+CREATE OR REPLACE TRIGGER empno_check_trigger
+BEFORE INSERT OR UPDATE ON emp
+FOR EACH ROW
+DECLARE
+    v_count NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO v_count FROM emp WHERE empno = :NEW.empno;
+    
+    IF v_count > 0 OR :NEW.empno IS NULL THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Duplicate or null empno not allowed');
+    END IF;
+END;
+/
+
+-- Q15) Before Insert/Update/Delete: Statement level Trigger
+-- Create a database trigger that allows changes to employee table only during the business hours (i.e. from 8 a.m to 5 p.m.) from Monday to Friday. There is no restriction on viewing data from the table.
+CREATE OR REPLACE TRIGGER time_check
+BEFORE INSERT OR UPDATE OR DELETE ON emp
+DECLARE
+    v_hour NUMBER;
+    v_day VARCHAR2(10);
+BEGIN
+    SELECT TO_CHAR(SYSDATE, 'HH24'), TO_CHAR(SYSDATE, 'DY')
+    INTO v_hour, v_day
+    FROM DUAL;
+    
+    IF v_hour NOT BETWEEN 8 AND 17 OR v_day IN ('SAT', 'SUN') THEN         RAISE_APPLICATION_ERROR(-20002, 'Changes can only be made during business hours (8 a.m to 5 p.m.) from Monday to Friday');
+    END IF;
+END;
+/
+
+-- Information about Triggers
+-- We can use the data dictionary 'USER_TRIGGERS' to obtain information about any trigger. The below statement shows the structure of 'USER_TRIGGERS'.
+DESCRIBE USER_TRIGGERS;
+
+-- Q16) Find the trigger type, trigger event, and table name of the trigger ‘time_check’.
+SELECT trigger_type, triggering_event, table_name
+FROM user_triggers
+WHERE trigger_name = 'TIME_CHECK';
+
+-- Enabling and Disabling Triggers
+-- Syntax: ALTER TRIGGER trigger_name ENABLE | DISABLE (or) ALTER TABLE table_name ENABLE | DISABLE ALL TRIGGERS;
+-- Q17) Disable the trigger ‘job_history_trigger’
+ALTER TRIGGER job_history_trigger DISABLE;
+
+-- Q18) Disable all the triggers of emp table.
+ALTER TABLE emp DISABLE ALL TRIGGERS;
+
+-- Q19) Drop the trigger ‘empno_check_trigger’
+DROP TRIGGER empno_check_trigger;
+
+
+
