@@ -1,0 +1,112 @@
+{
+  "Airplane_type": [
+    { "A_ID": 738, "Capacity": 853, "A_weight": 394, "Company": "Indigo" },
+    { "A_ID": 777, "Capacity": 800, "A_weight": 380, "Company": "Vistara" },
+    { "A_ID": 750, "Capacity": 790, "A_weight": 364, "Company": "AirIndia" },
+    { "A_ID": 790, "Capacity": 850, "A_weight": 390, "Company": "SpiceJet" },
+    { "A_ID": 745, "Capacity": 770, "A_weight": 405, "Company": "GoAir" },
+    { "A_ID": 768, "Capacity": 867, "A_weight": 387, "Company": "AirAsia" },
+    { "A_ID": 821, "Capacity": 790, "A_weight": 355, "Company": "TruJet" },
+    { "A_ID": 785, "Capacity": 835, "A_weight": 410, "Company": "Alliance Air" }
+  ],
+  "Route": [
+    { "Route_ID": 168806, "Take_Off_point": "London", "Destination": "Delhi", "R_type": "Direct" },
+    { "Route_ID": 157306, "Take_Off_point": "NewJersey", "Destination": "Mumbai", "R_type": "2Hr Break" },
+    { "Route_ID": 178916, "Take_Off_point": "Washington", "Destination": "Jodhpur", "R_type": "3Hr Break" },
+    { "Route_ID": 324567, "Take_Off_point": "Chennai", "Destination": "Denmark", "R_type": "Direct" },
+    { "Route_ID": 452368, "Take_Off_point": "Chandigard", "Destination": "NewYork", "R_type": "3Hr Break" },
+    { "Route_ID": 894521, "Take_Off_point": "Daman", "Destination": "Delhi", "R_type": "Direct" },
+    { "Route_ID": 578425, "Take_Off_point": "Beijing", "Destination": "Punjab", "R_type": "Direct" },
+    { "Route_ID": 421523, "Take_Off_point": "Hyderabad", "Destination": "Jammu & Kashmir", "R_type": "Direct" }
+  ],
+  "Flight": [
+    { "Flight_ID": "AI2014", "Departure": "2021-01-12T08:45:00", "Arrival": "2021-01-12T22:25:00", "Flight_date": "2021-01-12", "A_ID": 738 },
+    { "Flight_ID": "QR2305", "Departure": "2020-12-26T12:05:00", "Arrival": "2020-12-27T12:25:00", "Flight_date": "2020-12-26", "A_ID": 777 },
+    { "Flight_ID": "EY1234", "Departure": "2021-02-10T05:00:00", "Arrival": "2021-02-10T22:30:00", "Flight_date": "2021-02-10", "A_ID": 750 },
+    { "Flight_ID": "LH9876", "Departure": "2021-02-25T10:15:00", "Arrival": "2021-02-25T23:00:00", "Flight_date": "2021-02-25", "A_ID": 790 },
+    { "Flight_ID": "BA1689", "Departure": "2021-03-02T02:15:00", "Arrival": "2021-03-02T22:00:00", "Flight_date": "2021-03-02", "A_ID": 745 },
+    { "Flight_ID": "AA4367", "Departure": "2021-03-25T00:05:00", "Arrival": "2021-03-25T02:15:00", "Flight_date": "2021-03-25", "A_ID": 768 },
+    { "Flight_ID": "CT7812", "Departure": "2021-04-04T14:15:00", "Arrival": "2021-04-04T20:00:00", "Flight_date": "2021-04-04", "A_ID": 821 },
+    { "Flight_ID": "PF4521", "Departure": "2020-12-25T17:00:00", "Arrival": "2020-12-25T22:30:00", "Flight_date": "2020-12-25", "A_ID": 785 }
+  ],
+  "AirFare": [
+    { "Fare_ID": 1, "Charge_Amount": 27341, "Description": "Standard Single", "Flight_ID": "AI2014" },
+    { "Fare_ID": 4, "Charge_Amount": 34837, "Description": "Standard Return", "Flight_ID": "QR2305" },
+    { "Fare_ID": 2, "Charge_Amount": 42176, "Description": "Key Fare Single", "Flight_ID": "EY1234" },
+    { "Fare_ID": 3, "Charge_Amount": 27373, "Description": "Business Return", "Flight_ID": "LH9876" },
+    { "Fare_ID": 6, "Charge_Amount": 44592, "Description": "Advanced Purchase", "Flight_ID": "BA1689" },
+    { "Fare_ID": 5, "Charge_Amount": 8777, "Description": "Superpex Return", "Flight_ID": "AA4367" },
+    { "Fare_ID": 7, "Charge_Amount": 9578, "Description": "Standard Return", "Flight_ID": "CT7812" },
+    { "Fare_ID": 8, "Charge_Amount": 4459, "Description": "Superpex Return", "Flight_ID": "PF4521" }
+  ],
+  "Passengers": [
+    { "Ps_ID": 1, "Ps_Name": "Steve Smith", "Address": "2230 Northside,Apt 11,London", "Age": 30, "Sex": "M", "Contacts": "8080367290", "Flight_ID": "AI2014" },
+    { "Ps_ID": 2, "Ps_Name": "Ankita Ahir", "Address": "3456 Vikas Apts,Apt 102,New Jersey", "Age": 26, "Sex": "F", "Contacts": "8080367280", "Flight_ID": "QR2305" },
+    { "Ps_ID": 4, "Ps_Name": "Akhilesh Joshi", "Address": "345 Chatam courts,Apt 678,Chennai", "Age": 29, "Sex": "M", "Contacts": "9080369290", "Flight_ID": "EY1234" },
+    { "Ps_ID": 3, "Ps_Name": "Khyati Mishra", "Address": "7820 Mccallum courts,Apt 234,Washington", "Age": 30, "Sex": "F", "Contacts": "8082267280", "Flight_ID": "LH9876" },
+    { "Ps_ID": 5, "Ps_Name": "Rom Solanki", "Address": "1234 Baker Apts,Apt 208,Chandigard", "Age": 60, "Sex": "M", "Contacts": "9004568903", "Flight_ID": "EY1234" },
+    { "Ps_ID": 6, "Ps_Name": "Lakshmi Sharma", "Address": "1110 Fir hills,Apt 90,Daman", "Age": 30, "Sex": "F", "Contacts": "7666190505", "Flight_ID": "AA4367" },
+    { "Ps_ID": 8, "Ps_Name": "Manan Lakhani", "Address": "7720 Mccallum Blvd,Apt 77,Beijing", "Age": 45, "Sex": "M", "Contacts": "8124579635", "Flight_ID": "CT7812" },
+    { "Ps_ID": 7, "Ps_Name": "Ria Gupta", "Address": "B-402,Aditya Apt,Hyderabad", "Age": 34, "Sex": "F", "Contacts": "9819414036", "Flight_ID": "EY1234" }
+  ],
+  "Countries": [
+    { "Country_code": 44, "Country_Name": "England" },
+    { "Country_code": 1, "Country_Name": "USA" },
+    { "Country_code": 91, "Country_Name": "India" },
+    { "Country_code": 45, "Country_Name": "Kingdom of Denmark" },
+    { "Country_code": 64, "Country_Name": "New Zealand" },
+    { "Country_code": 971, "Country_Name": "UAE" },
+    { "Country_code": 213, "Country_Name": "Algeria" },
+    { "Country_code": 55, "Country_Name": "Brazil" }
+  ],
+  "Airport": [
+    { "Air_code": "DEL", "Air_Name": "Indira Gandhi International Airport", "City": "Delhi", "State": "UP", "Country_code": 91 },
+    { "Air_code": "BOM", "Air_Name": "Chhatrapati Shivaji Maharaj International Airport", "City": "Mumbai", "State": "Maharashtra", "Country_code": 91 },
+    { "Air_code": "LCY", "Air_Name": "London City Airport", "City": "Newham", "State": "London", "Country_code": 44 },
+    { "Air_code": "EWR", "Air_Name": "Newark Liberty International Airport", "City": "Newark", "State": "New Jersey", "Country_code": 1 },
+    { "Air_code": "JFK", "Air_Name": "John F.Kennnedy International Airport", "City": "New York City", "State": "New York", "Country_code": 1 },
+    { "Air_code": "CPH", "Air_Name": "Copenhagen Airport", "City": "Copenhagen", "State": "Denmark", "Country_code": 45 },
+    { "Air_code": "AIP", "Air_Name": "Adampur Airport", "City": "Jalandhar", "State": "Punjab", "Country_code": 91 },
+    { "Air_code": "IXJ", "Air_Name": "Satwari Airport", "City": "Jammu", "State": "Jammu & Kashmir", "Country_code": 91 }
+  ],
+  "Employees": [
+    { "Emp_ID": 1234, "E_Name": "Rekha Tiwary", "Address": "202-Meeta Apt,Yogi Nagar,Mumbai", "Age": 30, "Email_ID": "rekha1234@gmail.com", "Contact": "+918530324018", "Air_code": "DEL" },
+    { "Emp_ID": 3246, "E_Name": "John Dsouza", "Address": "302-Fountain Apt,ElizaBeth Street, Newham", "Age": 26, "Email_ID": "john2346@gmail.com", "Contact": "+447911123456", "Air_code": "BOM" },
+    { "Emp_ID": 9321, "E_Name": "Sanjay Rathod", "Address": "62-Patwa Apt,Pradeep Nagar, Delhi", "Age": 36, "Email_ID": "sanjay78@gmail.com", "Contact": "+917504681201", "Air_code": "LCY" },
+    { "Emp_ID": 8512, "E_Name": "Hafsa Iqmar", "Address": "1023-Prajwal Apt,Newark", "Age": 41, "Email_ID": "hafsa964@gmail.com", "Contact": "6465554468", "Air_code": "EWR" },
+    { "Emp_ID": 7512, "E_Name": "Akshay Sharma", "Address": "Akshay Villa,Queens Street,Copenhagen", "Age": 20, "Email_ID": "akshay27@gmail.com", "Contact": "+45886443210", "Air_code": "JFK" },
+    { "Emp_ID": 5123, "E_Name": "Lara Jen", "Address": "28-Mark road,Victoria street,New York City", "Age": 31, "Email_ID": "jenlara4@gmail.com", "Contact": "+448000751234", "Air_code": "CPH" },
+    { "Emp_ID": 2458, "E_Name": "Johny Paul", "Address": "45-Balaji Apt,Ajit Nagar,Jalandar", "Age": 32, "Email_ID": "johnypaul8@gmail.com", "Contact": "+919785425154", "Air_code": "AIP" },
+    { "Emp_ID": 4521, "E_Name": "Nidhi Maroliya", "Address": "6-Matruchaya Apt,Park Road, Jammu", "Age": 31, "Email_ID": "nidhi785@gmail.com", "Contact": "+918211954901", "Air_code": "IXJ" }
+  ],
+  "Can_Land": [
+    { "Air_code": "DEL", "Flight_ID": "AI2014" },
+    { "Air_code": "BOM", "Flight_ID": "QR2305" },
+    { "Air_code": "LCY", "Flight_ID": "EY1234" },
+    { "Air_code": "EWR", "Flight_ID": "LH9876" },
+    { "Air_code": "JFK", "Flight_ID": "BA1689" },
+    { "Air_code": "CPH", "Flight_ID": "AA4367" },
+    { "Air_code": "AIP", "Flight_ID": "CT7812" },
+    { "Air_code": "IXJ", "Flight_ID": "PF4521" }
+  ],
+  "Transactions": [
+    { "Trans_ID": 12345678, "Transaction_Date": "2021-02-21", "Booking_Date": "2021-02-22", "Payment_Method": "Google Pay", "Emp_ID": 1234, "Ps_ID": 1, "Flight_ID": "AI2014", "Fare_ID": 1 },
+    { "Trans_ID": 45612789, "Transaction_Date": "2021-01-12", "Booking_Date": "2021-01-14", "Payment_Method": "Credit Card", "Emp_ID": 3246, "Ps_ID": 2, "Flight_ID": "QR2305", "Fare_ID": 4 },
+    { "Trans_ID": 56987123, "Transaction_Date": "2020-12-05", "Booking_Date": "2020-12-02", "Payment_Method": "Paytm", "Emp_ID": 9321, "Ps_ID": 4, "Flight_ID": "EY1234", "Fare_ID": 2 },
+    { "Trans_ID": 45321879, "Transaction_Date": "2021-03-15", "Booking_Date": "2021-03-16", "Payment_Method": "PhonePe", "Emp_ID": 8512, "Ps_ID": 3, "Flight_ID": "LH9876", "Fare_ID": 3 },
+    { "Trans_ID": 75145863, "Transaction_Date": "2021-04-22", "Booking_Date": "2021-04-25", "Payment_Method": "Paytm", "Emp_ID": 7512, "Ps_ID": 5, "Flight_ID": "EY1234", "Fare_ID": 6 },
+    { "Trans_ID": 17892455, "Transaction_Date": "2021-02-05", "Booking_Date": "2021-02-08", "Payment_Method": "Paytm", "Emp_ID": 5123, "Ps_ID": 6, "Flight_ID": "AA4367", "Fare_ID": 5 },
+    { "Trans_ID": 24517852, "Transaction_Date": "2021-03-06", "Booking_Date": "2021-03-08", "Payment_Method": "PhonePe", "Emp_ID": 2458, "Ps_ID": 8, "Flight_ID": "CT7812", "Fare_ID": 7 },
+    { "Trans_ID": 32548525, "Transaction_Date": "2021-01-20", "Booking_Date": "2021-01-25", "Payment_Method": "Credit Card", "Emp_ID": 4521, "Ps_ID": 7, "Flight_ID": "EY1234", "Fare_ID": 8 }
+  ],
+  "Travels_on": [
+    { "Route_ID": 168806, "Flight_ID": "AI2014" },
+    { "Route_ID": 157306, "Flight_ID": "QR2305" },
+    { "Route_ID": 178916, "Flight_ID": "EY1234" },
+    { "Route_ID": 324567, "Flight_ID": "LH9876" },
+    { "Route_ID": 452368, "Flight_ID": "BA1689" },
+    { "Route_ID": 894521, "Flight_ID": "AA4367" },
+    { "Route_ID": 578425, "Flight_ID": "CT7812" },
+    { "Route_ID": 421523, "Flight_ID": "PF4521" }
+  ]
+}
